@@ -1,11 +1,12 @@
-import openpyxl
+import SheetsController
 
-document=openpyxl.load_workbook("").get_sheet_by_name("Sheet1")
+document=getFile()
 
-def win(message,client,args):
-    return 0==0
 
-def loss(message,client,args):
+def win_loss(win_loss,message,client,args):
+    #find discord ID in spreadsheet
+    #go to win column, get the data and add plus one
+    #go to the other person mentioned and go to their loss sheet and add one to their loss sheet
     return 0==0
 
 def rankList(message,client,args):

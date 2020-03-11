@@ -2,6 +2,7 @@
 import discord
 import EventHandler
 import ReactionBoys
+import SheetsController
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
