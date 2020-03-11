@@ -1,6 +1,6 @@
 import SheetsController
 
-document=getFile()
+document=SheetsController.getFile()
 
 
 def win_loss(win_loss,message,client,args):
