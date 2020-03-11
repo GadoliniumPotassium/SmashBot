@@ -1,0 +1,2 @@
+https://realpython.com/how-to-make-a-discord-bot-python/
+https://medium.com/bad-programming/making-a-cool-discord-bot-in-python-3-e6773add3c48
