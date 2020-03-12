@@ -9,7 +9,7 @@ TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
 GUILD = '687313651216285811'
 client = discord.Client()
 
-ch=EventHandler(client)
+EH=EventHandler
 
 @client.event
 async def on_ready():
@@ -25,7 +25,12 @@ async def on_ready():
 @client.event
 async def on_message(message):
 	# print message content
-	await message.content
+	message_content=message.content
+	message_sender=message.author.name
+	message_sender_id=message.author.id
+	message_sender_id=message_sender_id
+	print(str(message_content)+"\n"+str(message_sender)+"\n"+str(message_sender_id))
+	#await message.content
 
 # start bot
 client.run(TOKEN)

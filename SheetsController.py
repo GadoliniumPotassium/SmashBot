@@ -11,4 +11,4 @@ gc = gspread.authorize(credentials)
 wks = gc.open_by_url("https://docs.google.com/spreadsheets/d/1JJ9Gd9GgS5LQ6mJV2dD0pBfdCkOtY9QLkeWbiOOswn8/edit#gid=0")
 
 def getSheet():
-    return wks
+    return wks.sheet1
