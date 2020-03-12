@@ -5,7 +5,7 @@ import SheetsController
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
-GUILD = '687313651216285811'
+GUILD = '686271323869151314'
 client = discord.Client()
 
 RF=ReactionFunctions
@@ -31,16 +31,17 @@ async def on_message(message):
 		message_content=message.content
 		message_sender=message.author.name
 		message_sender_id=message.author.id
-		message_sender_id=message_sender_id
+		print(message.content)
+		print(message_sender_id)
 		tokens= message_content.split(" ")
 		tokens= message_content.split(" ")
 		tokens = list(filter(None, tokens))
+		print(tokens)
 		if(tokens[0]=="!falcon"):
-			tokens= message_content.split(" ")
-			tokens = list(filter(None, tokens))
-			if(len(tokens) < 1):
+			if(len(tokens) == 1):
+				await channel.send(RF.listCommands())
 				return
-			if(tokens[1]=="help"):
+			elif(tokens[1]=="help"):
 				print(RF.listCommands())
 				await channel.send(RF.listCommands())
 			elif(tokens[1]=="rank"):
@@ -56,6 +57,11 @@ async def on_message(message):
 				await channel.send(RF.win_loss(message.author.id,tokens))
 			elif (tokens[1]=="join"):
 				await channel.send(RF.joinLeague([message.author.name,message.author.id]))
+			elif (tokens[1]=="mac"):
+				await channel.send("https://gph.is/1m04fun")
+			elif (tokens[1]=="punch"):
+				await channel.send("https://gfycat.com/violetperfumedindochinahogdeer")
+
 			else:
 				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
 

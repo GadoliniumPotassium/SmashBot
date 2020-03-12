@@ -14,41 +14,32 @@ def win_loss(me,split_command):
     rowHim=0
     colHim=0
     max_cols=len(document.col_values(1))
-    split_command[3]=split_command[3][3:-1]
+    split_command[3]=split_command[3][2:-1]
     print("----------")
     print (me)
-    print ("lkjhgf")
     print (split_command[3])
+    
     print("-------------")
+    print("commencing first loop")
     for i in range(max_cols+1):
         if(i>1):
-            print(document.cell(i,2).value)
-            print(me)
+            print("searching for calling user")
             if(str(document.cell(i,2).value)==str(me)):
-                print("Found me")
+                print("Found the calling user")
                 Foundhim=True
                 rowMe=i
                 colMe=1
-                print(str(rowMe)+" and "+str(colMe))
-                break
-
-    for j in range(max_cols+1):
-        if(j>1):
-            print(document.cell(j,2).value)
-            print(split_command[3])
-            if(str(document.cell(j,2).value)==str(split_command[3])):
-                print("Found him")
+            print("searching for opponent")
+            print(document.cell(i,2).value)
+            if(str(document.cell(i,2).value)==str(split_command[3])):
+                print("Found the opponent")
                 Foundme=True
-                rowHim=j
+                rowHim=i
                 colHim=1
-                print(str(rowHim)+" and "+str(colHim))
-                break
+
     if(Foundhim and Foundme):
         print("Both people were found")
         #cell update begins here
-        print(split_command[0])
-        split_command.pop()
-        print(split_command[0])
         if(split_command[1].lower()=="win"):
             print("updating in win")
             document.update_cell(rowMe,colMe+2,str(int(document.cell(rowMe,colMe+2).value)+1))
@@ -153,4 +144,3 @@ def listLeagueMembers():
 def listCommands():
     return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\njoin\n'win vs @member'\n'loss vs @member'\nrecord\n}"
 
-#win_loss("613007450538377216",["!falcon","win","vs","320033043119079425"])
