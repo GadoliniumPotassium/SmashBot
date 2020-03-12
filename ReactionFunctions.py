@@ -1,24 +1,24 @@
 import SheetsController
 
 document=SheetsController.getSheet()
-
 def win_loss(me,split_command):
     #find discord ID in spreadsheet
     #go to win column, get the data and add plus one
     #go to the other person mentioned and go to their loss sheet and add one to their loss sheet
     #time to define args 
     #me is the sender
-    areYouThere=False
-    isHeThere=True
+    Foundhim=False
+    Foundme=False
     rowMe=0
     colMe=0
     rowHim=0
     colHim=0
     max_cols=len(document.col_values(1))
-    split_command[2]=split_command[2][3:-1]
+    split_command[3]=split_command[3][3:-1]
     print("----------")
     print (me)
-    print (split_command[2])
+    print ("lkjhgf")
+    print (split_command[3])
     print("-------------")
     for i in range(max_cols+1):
         if(i>1):
@@ -26,27 +26,33 @@ def win_loss(me,split_command):
             print(me)
             if(str(document.cell(i,2).value)==str(me)):
                 print("Found me")
-                areYouThere=True
+                Foundhim=True
                 rowMe=i
                 colMe=1
+                print(str(rowMe)+" and "+str(colMe))
                 break
 
     for j in range(max_cols+1):
         if(j>1):
             print(document.cell(j,2).value)
-            print(split_command[2])
-            if(str(document.cell(j,2).value)==str(split_command[2])):
+            print(split_command[3])
+            if(str(document.cell(j,2).value)==str(split_command[3])):
                 print("Found him")
-                isHeThere=True
-                rowHim=i
+                Foundme=True
+                rowHim=j
                 colHim=1
+                print(str(rowHim)+" and "+str(colHim))
                 break
-    if(isHeThere == True and areYouThere == True):
+    if(Foundhim and Foundme):
+        print("Both people were found")
         #cell update begins here
+        print(split_command[0])
+        split_command.pop()
+        print(split_command[0])
         if(split_command[1].lower()=="win"):
             print("updating in win")
             document.update_cell(rowMe,colMe+2,str(int(document.cell(rowMe,colMe+2).value)+1))
-            document.update_cell(rowHim,colHim+3,str(int(document.cell(rowHim,colHim+3).value)+1))
+            document.update_cell(rowHim,colHim+3 ,str(int(document.cell(rowHim,colHim+3).value)+1))
             return "Data has been updated, check record to see your current record"
         elif(split_command[1].lower()=="loss"):
             print("updating in loss")
@@ -54,7 +60,8 @@ def win_loss(me,split_command):
             document.update_cell(rowHim,colHim+2,str(int(document.cell(rowHim,colHim+2).value)+1))
             return "Data has been updated, check record to see your current record"
         else:
-            return "Nothing happened"
+            print ("Something wrong")
+            return "Something wrong"
     else:
         return "One of you two is not there, make sure you're in the league."
         
@@ -132,7 +139,7 @@ def joinLeague(args):
         document.update_cell(row_where_to_add, 2, str(args[1]))
         document.update_cell(row_where_to_add, 3,0)
         document.update_cell(row_where_to_add, 4,0)
-        document.update_cell(row_where_to_add, 5,"=IF(D"+row_where_to_add+"=0, Perfect Run,"+"C"+row_where_to_add+"/"+"D"+row_where_to_add)
+        document.update_cell(row_where_to_add, 5, str('=IF(D' + str(row_where_to_add) + '=0, "Perfect Run", C' + str(row_where_to_add)+ "/" + "D"+ str(row_where_to_add) + ")"))
         return str(args[0]) + " has joined the league"
 
 def listLeagueMembers():
@@ -144,5 +151,6 @@ def listLeagueMembers():
      return final_str
 
 def listCommands():
-    return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\n'win vs @member'\n'loss vs @member'\nrecord\n}"
+    return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\njoin\n'win vs @member'\n'loss vs @member'\nrecord\n}"
 
+#win_loss("613007450538377216",["!falcon","win","vs","320033043119079425"])

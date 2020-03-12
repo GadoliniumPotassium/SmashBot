@@ -33,8 +33,13 @@ async def on_message(message):
 		message_sender_id=message.author.id
 		message_sender_id=message_sender_id
 		tokens= message_content.split(" ")
+		tokens= message_content.split(" ")
 		tokens = list(filter(None, tokens))
-		if(tokens[0]=="!falcon" and len(tokens)>1):
+		if(tokens[0]=="!falcon"):
+			tokens= message_content.split(" ")
+			tokens = list(filter(None, tokens))
+			if(len(tokens) < 1):
+				return
 			if(tokens[1]=="help"):
 				print(RF.listCommands())
 				await channel.send(RF.listCommands())
@@ -53,8 +58,7 @@ async def on_message(message):
 				await channel.send(RF.joinLeague([message.author.name,message.author.id]))
 			else:
 				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
-		elif(tokens[0]=="!falcon" and len(tokens)==1):
-			await channel.send(RF.listCommands())
+
 			
 
 
