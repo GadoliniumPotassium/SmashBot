@@ -1,6 +1,6 @@
 import SheetsController
 
-document=SheetsController.getFile()
+document=SheetsController.getSheet()
 
 
 def win_loss(message,client,args):
@@ -10,13 +10,13 @@ def win_loss(message,client,args):
     return 0==0
 
 def rankList(message,client,args):
+    #Will sort through all the players and print them
+    # in order of highest to lowest Win/Loss Ratio
     return 0==0
 
 def displayRecord(message,client,args):
+    #Will display the record of the calling person
     return 0==0
 
 def addToDB(message,client,args):
-    return 0==0
-
-def setMain(message,client,args):
     return 0==0
