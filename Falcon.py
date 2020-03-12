@@ -1,7 +1,7 @@
 #bot.py
 import discord
 import EventHandler
-import ReactionBoys
+import ReactionFunctions
 import SheetsController
 from dotenv import load_dotenv
 load_dotenv()
