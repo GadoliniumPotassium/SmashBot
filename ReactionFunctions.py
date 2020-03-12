@@ -2,37 +2,65 @@ import SheetsController
 
 document=SheetsController.getSheet()
 
-def win_loss(message_split,args):
+def win_loss(me,split_command):
     #find discord ID in spreadsheet
     #go to win column, get the data and add plus one
     #go to the other person mentioned and go to their loss sheet and add one to their loss sheet
     #time to define args 
-    #args[0] is the sender
+    #me is the sender
+    areYouThere=False
+    isHeThere=True
+    rowMe=0
+    colMe=0
+    rowHim=0
+    colHim=0
+    max_cols=len(document.col_values(1))
+    split_command[2]=split_command[2][3:-1]
+    print("----------")
+    print (me)
+    print (split_command[2])
+    print("-------------")
+    for i in range(max_cols+1):
+        if(i>1):
+            print(document.cell(i,2).value)
+            print(me)
+            if(str(document.cell(i,2).value)==str(me)):
+                print("Found me")
+                areYouThere=True
+                rowMe=i
+                colMe=1
+                break
 
-    message_split[2]=message_split[2][3:-1]
-    try:
-        OPcell=document.find(message_split[2])
-        UserCell=document.find(args[0])
-    except Exception as e:
-        print (e)
-        return "One of the two people are not in the league, join league to play"
-    
-    print("about to enter if")
-    if(message_split[0].lower() == "win"):
-        win=str(document.cell(UserCell.row,UserCell.col+2).value)
-        loss=str(document.cell(OPcell.row,OPcell.col+2).value)
-        document.update_cell((UserCell.row),(UserCell.col+2),str(int(win)+1))
-        document.update_cell(OPcell.row,OPcell.col+2,str(int(loss)+1))
-        return displayRecord(args[0],message_split[2])
+    for j in range(max_cols+1):
+        if(j>1):
+            print(document.cell(j,2).value)
+            print(split_command[2])
+            if(str(document.cell(j,2).value)==str(split_command[2])):
+                print("Found him")
+                isHeThere=True
+                rowHim=i
+                colHim=1
+                break
+    if(isHeThere == True and areYouThere == True):
+        #cell update begins here
+        if(split_command[1].lower()=="win"):
+            print("updating in win")
+            document.update_cell(rowMe,colMe+2,str(int(document.cell(rowMe,colMe+2).value)+1))
+            document.update_cell(rowHim,colHim+3,str(int(document.cell(rowHim,colHim+3).value)+1))
+            return "Data has been updated, check record to see your current record"
+        elif(split_command[1].lower()=="loss"):
+            print("updating in loss")
+            document.update_cell(rowMe,colMe+3,str(int(document.cell(rowMe,colMe+3).value)+1))
+            document.update_cell(rowHim,colHim+2,str(int(document.cell(rowHim,colHim+2).value)+1))
+            return "Data has been updated, check record to see your current record"
+        else:
+            return "Nothing happened"
+    else:
+        return "One of you two is not there, make sure you're in the league."
         
-    elif(message_split[0].lower() == ("loss")):
-        win=str(document.cell(UserCell.row,UserCell.col+2).value)
-        loss=str(document.cell(OPcell.row,OPcell.col+2).value)
-        document.update_cell(OPcell.row,OPcell.col+2,str(int(loss)+1))
-        document.update_cell((UserCell.row),(UserCell.col+2),str(int(win)+1))
-        return displayRecord(args[0],message_split[2])
-        
-    return True
+
+
+
 
 def rankList(args):
     #Will sort through all the players and print them
@@ -59,21 +87,34 @@ def rankList(args):
 
 def displayRecord(args):
     #Will display the record of the calling person
-    #Will go in by his username or id and print out his
+    #Will go in by his ID and print out his
     #win loss record as well as his W/L ratio
     str_result=""
-    try:
-        usersCell=document.find(args[0])
-    except Exception as e:
-        return "You are not in the league, please join to have a record."
-
-    row=usersCell.row
-    col=usersCell.col
-    if(usersCell.col==2):
-        str_result="The record of "+document.cell(row,col-1).value+" is "+ document.cell(row,3).value+" wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
-    if(usersCell.col==1):
-        str_result="The record of "+document.cell(row,col).value+" is "+ document.cell(row,3).value+" wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
-    return str_result
+    isThere=False
+    row=0
+    col=0
+    max_cols=len(document.col_values(1))
+    for i in range(max_cols+1):
+        if(i>=2):
+            if(args[0]==document.cell(i,1).value):
+                row=i
+                col=1
+                isThere=True
+    for i in range(max_cols+1):
+        if(i>=2):
+            if(args[0]==document.cell(i,2).value):
+                row=i
+                col=2
+                isThere=True
+                    
+    if isThere:
+        if(col==2):
+            str_result="The record of " + document.cell(row,col-1).value+ " is " + document.cell(row,3).value+ " wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
+        if(col==1):
+            str_result="The record of "+document.cell(row,col).value+" is "+ document.cell(row,3).value+" wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
+        return str_result
+    else:
+        return "One of the two players are not there"
 
 def joinLeague(args):
     #will check to see if user is already in database
@@ -86,13 +127,13 @@ def joinLeague(args):
         return "Player already exists in the league, cannot join again"
     except Exception as e:
           #args 0 is the username
-        document.update_cell(row_where_to_add, 1, args[0])
+        document.update_cell(row_where_to_add, 1, str(args[0]))
         #args 1 is the user id
-        document.update_cell(row_where_to_add, 2, args[1])
+        document.update_cell(row_where_to_add, 2, str(args[1]))
         document.update_cell(row_where_to_add, 3,0)
         document.update_cell(row_where_to_add, 4,0)
-        document.update_cell(row_where_to_add, 5,'=IF(D7=0,"Perfect Run",C7/D7)')
-    return args[0]+" has joined the league"
+        document.update_cell(row_where_to_add, 5,"=IF(D"+row_where_to_add+"=0, Perfect Run,"+"C"+row_where_to_add+"/"+"D"+row_where_to_add)
+        return str(args[0]) + " has joined the league"
 
 def listLeagueMembers():
      max_cols=len(document.col_values(1))
@@ -104,3 +145,4 @@ def listLeagueMembers():
 
 def listCommands():
     return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\n'win vs @member'\n'loss vs @member'\nrecord\n}"
+

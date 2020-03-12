@@ -39,8 +39,8 @@ async def on_message(message):
 				print(RF.listCommands())
 				await channel.send(RF.listCommands())
 			elif(tokens[1]=="rank"):
-				print(RF.rankList())
-				await channel.send(RF.rankList())
+				print(RF.rankList([message.author.name,""]))
+				await channel.send(RF.rankList([message.author.name])+"")
 			elif(tokens[1]=="members"):
 				print(RF.listLeagueMembers())
 				await channel.send(RF.listLeagueMembers())
@@ -48,11 +48,13 @@ async def on_message(message):
 				print(RF.displayRecord([message.author.name]))
 				await channel.send(RF.displayRecord([message.author.name]))
 			elif(tokens[1]=="win" or tokens[1]=="loss"):
-				await channel.send(RF.win_loss(tokens, message.author.name))
+				await channel.send(RF.win_loss(message.author.id,tokens))
 			elif (tokens[1]=="join"):
 				await channel.send(RF.joinLeague([message.author.name,message.author.id]))
-		else:
-			await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
+			else:
+				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
+		elif(tokens[0]=="!falcon" and len(tokens)==1):
+			await channel.send(RF.listCommands())
 			
 
 
