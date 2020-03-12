@@ -3,7 +3,7 @@ import SheetsController
 document=SheetsController.getFile()
 
 
-def win_loss(win_loss,message,client,args):
+def win_loss(message,client,args):
     #find discord ID in spreadsheet
     #go to win column, get the data and add plus one
     #go to the other person mentioned and go to their loss sheet and add one to their loss sheet
