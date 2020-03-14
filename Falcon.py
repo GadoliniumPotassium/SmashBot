@@ -65,8 +65,5 @@ async def on_message(message):
 			else:
 				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
 
-			
-
-
 # start bot
 client.run(TOKEN)

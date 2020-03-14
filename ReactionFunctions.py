@@ -14,7 +14,10 @@ def win_loss(me,split_command):
     rowHim=0
     colHim=0
     max_cols=len(document.col_values(1))
-    split_command[3]=split_command[3][2:-1]
+    for char in split_command[3]:
+    	if char in "<>@!":
+        	split_command[3]=split_command[3].replace(char,'')
+    
     print("----------")
     print (me)
     print (split_command[3])
@@ -124,6 +127,9 @@ def joinLeague(args):
         document.find(args[0])
         return "Player already exists in the league, cannot join again"
     except Exception as e:
+        fh=open("members.txt","a")
+        fh.write(str(args[0]))
+        fh.close()
           #args 0 is the username
         document.update_cell(row_where_to_add, 1, str(args[0]))
         #args 1 is the user id
@@ -134,12 +140,12 @@ def joinLeague(args):
         return str(args[0]) + " has joined the league"
 
 def listLeagueMembers():
-     max_cols=len(document.col_values(1))
-     final_str="Here are the current members of the league:\n"
-     for i in range(max_cols+1):
-         if(i>1):
-             final_str+=(str(document.cell(i,1).value)+"\n")
-     return final_str
+    fh=open("members.txt","r")
+    final_str=fh.read()
+    fh.close()
+    print(final_str)
+    return final_str
+
 
 def listCommands():
     return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\njoin\n'win vs @member'\n'loss vs @member'\nrecord\n}"
