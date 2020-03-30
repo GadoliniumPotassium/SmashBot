@@ -47,12 +47,12 @@ def win_loss(me,split_command):
             print("updating in win")
             document.update_cell(rowMe,colMe+2,str(int(document.cell(rowMe,colMe+2).value)+1))
             document.update_cell(rowHim,colHim+3 ,str(int(document.cell(rowHim,colHim+3).value)+1))
-            return "Data has been updated, check record to see your current record"
+            return "Data has been updated, to see record enter '!falcon record'."
         elif(split_command[1].lower()=="loss"):
             print("updating in loss")
             document.update_cell(rowMe,colMe+3,str(int(document.cell(rowMe,colMe+3).value)+1))
             document.update_cell(rowHim,colHim+2,str(int(document.cell(rowHim,colHim+2).value)+1))
-            return "Data has been updated, check record to see your current record"
+            return "Data has been updated, to see record enter '!falcon record'."
         else:
             print ("Something wrong")
             return "Something wrong"
@@ -111,7 +111,7 @@ def displayRecord(args):
     if isThere:
         if(col==2):
             str_result="The record of " + document.cell(row,col-1).value+ " is " + document.cell(row,3).value+ " wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
-        if(col==1):
+        elif(col==1):
             str_result="The record of "+document.cell(row,col).value+" is "+ document.cell(row,3).value+" wins and " + document.cell(row, 4).value+" losses for a Win-Loss ratio of "+ document.cell(row,5).value
         return str_result
     else:
@@ -136,14 +136,14 @@ def joinLeague(args):
         document.update_cell(row_where_to_add, 2, str(args[1]))
         document.update_cell(row_where_to_add, 3,0)
         document.update_cell(row_where_to_add, 4,0)
-        document.update_cell(row_where_to_add, 5, str('=IF(D' + str(row_where_to_add) + '=0, "Perfect Run", C' + str(row_where_to_add)+ "/" + "D"+ str(row_where_to_add) + ")"))
+        document.update_cell(row_where_to_add, 5, str('=IF(D' + str(row_where_to_add) + '=0, "Perfect Run or has not yet played a game", C' + str(row_where_to_add)+ "/" + "D"+ str(row_where_to_add) + ")"))
         return str(args[0]) + " has joined the league"
 
 def listLeagueMembers():
     fh=open("members.txt","r")
-    final_str=fh.read()
+    final_str="Here are the current members:\n"+fh.read()
     fh.close()
-    print(final_str)
+    
     return final_str
 
 

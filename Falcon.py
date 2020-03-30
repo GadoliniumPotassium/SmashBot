@@ -31,27 +31,22 @@ async def on_message(message):
 		message_content=message.content
 		message_sender=message.author.name
 		message_sender_id=message.author.id
-		print(message.content)
-		print(message_sender_id)
 		tokens= message_content.split(" ")
 		tokens= message_content.split(" ")
 		tokens = list(filter(None, tokens))
-		print(tokens)
+		if(tokens == []):
+			tokens=[1]
 		if(tokens[0]=="!falcon"):
 			if(len(tokens) == 1):
 				await channel.send(RF.listCommands())
 				return
 			elif(tokens[1]=="help"):
-				print(RF.listCommands())
 				await channel.send(RF.listCommands())
 			elif(tokens[1]=="rank"):
-				print(RF.rankList([message.author.name,""]))
 				await channel.send(RF.rankList([message.author.name])+"")
 			elif(tokens[1]=="members"):
-				print(RF.listLeagueMembers())
 				await channel.send(RF.listLeagueMembers())
 			elif(tokens[1]=="record"):
-				print(RF.displayRecord([message.author.name]))
 				await channel.send(RF.displayRecord([message.author.name]))
 			elif(tokens[1]=="win" or tokens[1]=="loss"):
 				await channel.send(RF.win_loss(message.author.id,tokens))
@@ -61,7 +56,9 @@ async def on_message(message):
 				await channel.send("https://gph.is/1m04fun")
 			elif (tokens[1]=="punch"):
 				await channel.send("https://gfycat.com/violetperfumedindochinahogdeer")
-
+			elif (tokens[1]=="RACIST" or tokens[1]=="racist"):
+				file = discord.File("MachineRacist.png", filename="MachineRacist.png")
+				await channel.send("I am indeed racist :)",file=file)
 			else:
 				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
 
