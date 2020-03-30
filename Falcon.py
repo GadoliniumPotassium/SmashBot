@@ -2,6 +2,8 @@
 import discord
 import ReactionFunctions
 import SheetsController
+from random import randint
+from os import listdir
 from dotenv import load_dotenv
 load_dotenv()
 TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
@@ -9,6 +11,22 @@ GUILD = '686271323869151314'
 client = discord.Client()
 
 RF=ReactionFunctions
+
+def randomRacistReplies():
+	print("Opening file")
+	file=open("MR/racism.txt","r")
+	comments=file.readlines()
+	print(comments)
+	file.close()
+	print("Closing file")
+	return comments[randint(0,len(comments)-1)]
+
+def wholesomeReplies():
+	print("Opening directories")
+	wholesome=listdir("Wholesome")
+	print("about to return a file")
+	return wholesome[randint(0,len(wholesome)-1)]
+	
 
 @client.event
 async def on_ready():
@@ -51,14 +69,32 @@ async def on_message(message):
 			elif(tokens[1]=="win" or tokens[1]=="loss"):
 				await channel.send(RF.win_loss(message.author.id,tokens))
 			elif (tokens[1]=="join"):
+				print('running join league')
 				await channel.send(RF.joinLeague([message.author.name,message.author.id]))
 			elif (tokens[1]=="mac"):
+				print('falcon mac')
 				await channel.send("https://gph.is/1m04fun")
 			elif (tokens[1]=="punch"):
+				print('running falcon punch')
 				await channel.send("https://gfycat.com/violetperfumedindochinahogdeer")
 			elif (tokens[1]=="RACIST" or tokens[1]=="racist"):
-				file = discord.File("MachineRacist.png", filename="MachineRacist.png")
-				await channel.send("I am indeed racist :)",file=file)
+				print('gonna print racism')
+				file = discord.File("MR/MachineRacist.png", filename="MachineRacist.png")
+				await channel.send(randomRacistReplies(),file=file)
+			elif (tokens[1]=="WHOLESOME" or tokens[1]=="wholesome" or tokens[1]=="love" or tokens[1]=="cute"):
+				print('gonna print wholesome pic')
+				pic=wholesomeReplies()
+				file = discord.File("Wholesome/"+pic, filename=pic)
+				await channel.send("Heres a bit of wholesome, love you <3",file=file)
+			elif (tokens[1]=="GG" or tokens[1]=="gg"):
+				print("running gg")
+				await channel.send("Thank you for having fun playing a good game of smash!")
+			elif (tokens[1]=="thank" and tokens[2]=="you"):
+				print("thank you command")
+				await channel.send("You're welcome "+message_sender +" :heart:")
+			elif (tokens[1]=="challenge"):
+				person=tokens[2]
+				await channel.send(message_sender+" has challenged "+ person)
 			else:
 				await channel.send("This is not a valid command, try again or type :'!falcon help' for more information")
 
