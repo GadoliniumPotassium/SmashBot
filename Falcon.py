@@ -27,7 +27,6 @@ def wholesomeReplies():
 	print("about to return a file")
 	return wholesome[randint(0,len(wholesome)-1)]
 	
-
 @client.event
 async def on_ready():
 	try:

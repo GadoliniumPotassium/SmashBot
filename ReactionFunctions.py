@@ -18,23 +18,14 @@ def win_loss(me,split_command):
     	if char in "<>@!":
         	split_command[3]=split_command[3].replace(char,'')
     
-    print("----------")
-    print (me)
-    print (split_command[3])
-    
-    print("-------------")
-    print("commencing first loop")
     for i in range(max_cols+1):
         if(i>1):
-            print("searching for calling user")
-            if(str(document.cell(i,2).value)==str(me)):
+            if(str(document.cell(i,2).value)==str(me) and Foundhim == False):
                 print("Found the calling user")
                 Foundhim=True
                 rowMe=i
                 colMe=1
-            print("searching for opponent")
-            print(document.cell(i,2).value)
-            if(str(document.cell(i,2).value)==str(split_command[3])):
+            if(str(document.cell(i,2).value)==str(split_command[3]) and Foundme == False):
                 print("Found the opponent")
                 Foundme=True
                 rowHim=i
@@ -47,11 +38,13 @@ def win_loss(me,split_command):
             print("updating in win")
             document.update_cell(rowMe,colMe+2,str(int(document.cell(rowMe,colMe+2).value)+1))
             document.update_cell(rowHim,colHim+3 ,str(int(document.cell(rowHim,colHim+3).value)+1))
+            print("Data has been updated")
             return "Data has been updated, to see record enter '!falcon record'."
         elif(split_command[1].lower()=="loss"):
             print("updating in loss")
             document.update_cell(rowMe,colMe+3,str(int(document.cell(rowMe,colMe+3).value)+1))
             document.update_cell(rowHim,colHim+2,str(int(document.cell(rowHim,colHim+2).value)+1))
+            print("Data has been updated")
             return "Data has been updated, to see record enter '!falcon record'."
         else:
             print ("Something wrong")
@@ -59,10 +52,6 @@ def win_loss(me,split_command):
     else:
         return "One of you two is not there, make sure you're in the league."
         
-
-
-
-
 def rankList(args):
     #Will sort through all the players and print them
     # in order of highest to lowest Win/Loss Ratio
@@ -145,7 +134,6 @@ def listLeagueMembers():
     fh.close()
     
     return final_str
-
 
 def listCommands():
     return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\njoin\n'win vs @member'\n'loss vs @member'\nrecord\n}"
