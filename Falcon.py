@@ -66,7 +66,7 @@ async def on_message(message):
 			elif(tokens[1]=="record"):
 				await channel.send(RF.displayRecord([message.author.name]))
 			elif(tokens[1]=="win" or tokens[1]=="loss"):
-				await channel.send(RF.win_loss(message.author.id,tokens))
+				await channel.send(RF.winOrloss(message.author.id,tokens))
 			elif (tokens[1]=="join"):
 				print('running join league')
 				await channel.send(RF.joinLeague([message.author.name,message.author.id]))
