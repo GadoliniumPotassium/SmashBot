@@ -4,6 +4,12 @@ workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
 document = workFile.active
 
 
+def calculateWinLoss(x, y):
+    if y == 0:
+        return "No losses"
+    return x / y
+
+
 def winOrLoss(me, split_command):
     # find discord ID in spreadsheet
     # go to win column, get the data and add plus one
@@ -39,6 +45,10 @@ def winOrLoss(me, split_command):
                 int(document.cell(row=rowMe, column=colMe + 2).value) + 1)
             document.cell(row=rowHim, column=colHim + 3).value = str(
                 int(document.cell(row=rowHim, column=colMe + 3)) + 1)
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=colMe + 2),
+                                                                        document.cell(row=rowMe, column=colMe + 3))
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=colMe + 2),
+                                                                        document.cell(row=rowHim, column=colMe + 3))
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         elif split_command[1].lower() == "loss":
@@ -47,6 +57,10 @@ def winOrLoss(me, split_command):
                 int(document.cell(row=rowMe, column=colMe + 3).value) + 1)
             document.cell(row=rowHim, column=colHim + 2).value = str(
                 int(document.cell(row=rowHim, column=colMe + 2)) + 1)
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=colMe + 2),
+                                                                        document.cell(row=rowMe, column=colMe + 3))
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=colMe + 2),
+                                                                        document.cell(row=rowHim, column=colMe + 3))
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         else:
@@ -62,7 +76,8 @@ def rankList(args):
     stat_list = {}
     max_height = document.max_row
     for i in range(2, max_height + 1):
-        stat_list[document.cell(row=i, column=1).value] = str(document.cell(row=i, column=5).value)
+        if (document.cell(row=i, column=1).value != "None"):
+            stat_list[document.cell(row=i, column=1).value] = str(document.cell(row=i, column=5).value)
     # We will sort the stat list here
     a = sorted(stat_list, key=stat_list.get)
     a.reverse()
@@ -128,21 +143,14 @@ def joinLeague(args):
     document.cell(row=row_where_to_add, column=2).value = str(args[1])
     document.cell(row=row_where_to_add, column=3).value = 0
     document.cell(row=row_where_to_add, column=4).value = 0
-    document.cell(row=row_where_to_add, column=5).value = str(
-        '=IF(D' + str(row_where_to_add) + '=0, "Perfect Run or has not yet played a game", C' + str(
-            row_where_to_add) + "/" + "D" + str(row_where_to_add) + ")")
+    document.cell(row=row_where_to_add, column=5).value = "No losses"
     workFile.save("Stats.xlsx")
     return args[0] + " has joined the league"
 
+
 def listLeagueMembers():
-    list=""
-    for i in range(2,document.max_row+1):
-        if(str(document.cell(row=i,column=1).value) != "None"):
-            list+=str(document.cell(row=i,column=1).value)+"\n"
-    return "The current list of members is :\n"+list
-
-print(listLeagueMembers())
-
-def listCommands():
-    return "command_list = Here are the following commands:\n!falcon: {\nrank\nmembers\njoin\n'win vs @member'\n'loss vs @member'\nrecord\n}"
-
+    list = ""
+    for i in range(2, document.max_row + 1):
+        if (str(document.cell(row=i, column=1).value) != "None"):
+            list += str(document.cell(row=i, column=1).value) + "\n"
+    return "The current list of members is :\n" + list
