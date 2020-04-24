@@ -12,6 +12,13 @@ client = discord.Client()
 
 RF = ReactionFunctions
 
+def handHolding():
+    print ("Opening file")
+    file = open("HandHolding.txt","r")
+    gif = file.readlines()
+    file.close()
+    print ("Closing file")
+    return gif[randint(0,len(gif)-1)]
 
 def randomRacistReplies():
     print("Opening file")
@@ -107,6 +114,8 @@ async def on_message(message):
                 await channel.send(message_sender + " has challenged " + person)
             elif tokens[1] == "funny" or tokens[1] == "haha":
                 await channel.send(RF.returnFunnyLink())
+            elif tokens[1]=="lewd":
+                await channel.send(handHolding())
             else:
                 await channel.send(
                     "This is not a valid command, try again or type :'!falcon help' for more information")
