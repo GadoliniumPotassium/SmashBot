@@ -24,9 +24,12 @@ def winOrLoss(me, split_command):
     colMe = 0
     rowHim = 0
     colHim = 0
-    for char in split_command[3]:
-        if char in "<>@!":
-            split_command[3] = split_command[3].replace(char, '')
+    try:
+        for char in split_command[3]:
+            if char in "<>@!":
+                split_command[3] = split_command[3].replace(char, '')
+    except IndexError:
+        return "You gave an incorrect input, try again."
     for i in range(2, max_height + 1):
         if Foundme == False and str(document.cell(row=i, column=2).value) == str(me):
             rowMe = i
@@ -90,7 +93,6 @@ def rankList(args):
         # of the like, we found you at position number x.
         if (i == args[0]):
             final_str = "You were found at position number " + str(pos) + "\n" + final_str
-            break
         pos += 1
     return final_str
 
@@ -154,3 +156,12 @@ def listLeagueMembers():
         if (str(document.cell(row=i, column=1).value) != "None"):
             list += str(document.cell(row=i, column=1).value) + "\n"
     return "The current list of members is :\n" + list
+
+def returnFunnyLink():
+    from random import randint
+    lmao=open("funnyLinks.txt","r")
+    links=lmao.readlines()
+    return links[randint(0, len(links) - 1)]
+
+def listCommands():
+    return "Here are the following commands:\n!falcon followed by\n1- win\loss vs @opponent\n2-join\n3-rank\n4-record\n5-other secret commands have fun finding them"
