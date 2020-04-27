@@ -3,12 +3,9 @@ import discord
 import ReactionFunctions
 from random import randint
 from os import listdir
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-TOKEN = os.os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
+GUILD = '686271323869151314'
 client = discord.Client()
 
 RF = ReactionFunctions
