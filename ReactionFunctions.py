@@ -7,12 +7,14 @@ document = workFile.active
 
 
 def calculateWinLoss(x, y):
-    if y == 0:
+    if y == 0 or y == "0":
         return "No losses"
-    return x / y
+    return int(x) / int(y)
 
 
 def winOrLoss(me, split_command):
+    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
+    document = workFile.active
     # find discord ID in spreadsheet
     # go to win column, get the data and add plus one
     # go to the other person mentioned and go to their loss sheet and add one to their loss sheet
@@ -50,10 +52,10 @@ def winOrLoss(me, split_command):
                 int(document.cell(row=rowMe, column=colMe + 2).value) + 1)
             document.cell(row=rowHim, column=colHim + 3).value = str(
                 int(document.cell(row=rowHim, column=colMe + 3)) + 1)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=colMe + 2),
-                                                                        document.cell(row=rowMe, column=colMe + 3))
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=colMe + 2),
-                                                                        document.cell(row=rowHim, column=colMe + 3))
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=3).value,
+                                                                        document.cell(row=rowMe, column=4).value)
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=3).value,
+                                                                        document.cell(row=rowHim, column=4).value)
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         elif split_command[1].lower() == "loss":
@@ -61,11 +63,11 @@ def winOrLoss(me, split_command):
             document.cell(row=rowMe, column=colMe + 3).value = str(
                 int(document.cell(row=rowMe, column=colMe + 3).value) + 1)
             document.cell(row=rowHim, column=colHim + 2).value = str(
-                int(document.cell(row=rowHim, column=colMe + 2)) + 1)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=colMe + 2),
-                                                                        document.cell(row=rowMe, column=colMe + 3))
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=colMe + 2),
-                                                                        document.cell(row=rowHim, column=colMe + 3))
+                int(document.cell(row=rowHim, column=colMe + 2).value) + 1)
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=3).value,
+                                                                        document.cell(row=rowMe, column=4).value)
+            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=3).value,
+                                                                        document.cell(row=rowHim, column=4).value)
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         else:
@@ -100,6 +102,8 @@ def rankList(args):
 
 
 def displayRecord(args):
+    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
+    document = workFile.active
     # Will display the record of the calling person
     # Will go in by his ID and print out his
     # win loss record as well as his W/L ratio
@@ -137,6 +141,8 @@ def displayRecord(args):
 
 
 def joinLeague(args):
+    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
+    document = workFile.active
     row_where_to_add = document.max_row + 1
     max_height = document.max_row
     for i in range(2, max_height + 1):
@@ -153,6 +159,8 @@ def joinLeague(args):
 
 
 def listLeagueMembers():
+    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
+    document = workFile.active
     list = ""
     for i in range(2, document.max_row + 1):
         if (str(document.cell(row=i, column=1).value) != "None"):
