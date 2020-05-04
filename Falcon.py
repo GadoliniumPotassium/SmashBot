@@ -1,44 +1,13 @@
 # bot.py
 import discord
 import ReactionFunctions
-from random import randint
-from os import listdir
+
 
 TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
 GUILD = '686271323869151314'
 client = discord.Client()
 
 RF = ReactionFunctions
-
-def handHolding():
-    print ("Opening file")
-    file = open("HandHolding.txt","r")
-    gif = file.readlines()
-    file.close()
-    print ("Closing file")
-    return gif[randint(0,len(gif)-1)]
-
-def randomRacistReplies():
-    print("Opening file")
-    file = open("MR/racism.txt", "r")
-    comments = file.readlines()
-    print(comments)
-    file.close()
-    print("Closing file")
-    return comments[randint(0, len(comments) - 1)]
-
-
-def pullPictures(directory):
-    pictures = listdir(directory)
-    a = pictures[randint(0, len(pictures) - 1)]
-    print(a)
-    return a
-
-
-def wholesomeReplies():
-    print("Opening directories")
-    return pullPictures("Wholesome")
-
 
 @client.event
 async def on_ready():
@@ -93,12 +62,12 @@ async def on_message(message):
                 await channel.send("https://gfycat.com/violetperfumedindochinahogdeer")
             elif tokens[1] == "RACIST" or tokens[1] == "racist":
                 print('gonna print racism')
-                pic = pullPictures("MR/Pictures/")
+                pic = RF.pullPictures("MR/Pictures/")
                 file = discord.File("MR/Pictures/" + pic, filename=pic)
-                await channel.send(randomRacistReplies(), file=file)
+                await channel.send(RF.randomRacistReplies(), file=file)
             elif tokens[1] == "WHOLESOME" or tokens[1] == "wholesome" or tokens[1] == "love" or tokens[1] == "cute":
                 print('gonna print wholesome pic')
-                pic = wholesomeReplies()
+                pic = RF.wholesomeReplies()
                 file1 = discord.File("Wholesome/" + pic, filename=pic)
                 await channel.send("Heres a bit of wholesome, love you <3", file=file1)
             elif tokens[1] == "GG" or tokens[1] == "gg":
@@ -113,7 +82,7 @@ async def on_message(message):
             elif tokens[1] == "funny" or tokens[1] == "haha":
                 await channel.send(RF.returnFunnyLink())
             elif tokens[1]=="lewd":
-                await channel.send(handHolding())
+                await channel.send(RF.handHolding())
             else:
                 await channel.send(
                     "This is not a valid command, try again or type :'!falcon help' for more information")

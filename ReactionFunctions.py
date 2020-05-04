@@ -1,4 +1,6 @@
 import openpyxl
+from random import randint
+from os import listdir
 
 workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
 document = workFile.active
@@ -165,3 +167,32 @@ def returnFunnyLink():
 
 def listCommands():
     return "Here are the following commands:\n!falcon followed by\n1- win\loss vs @opponent\n2-join\n3-rank\n4-record\n5-other secret commands have fun finding them"
+
+def handHolding():
+    print ("Opening file")
+    file = open("HandHolding.txt","r")
+    gif = file.readlines()
+    file.close()
+    print ("Closing file")
+    return gif[randint(0,len(gif)-1)]
+
+def randomRacistReplies():
+    print("Opening file")
+    file = open("MR/racism.txt", "r")
+    comments = file.readlines()
+    print(comments)
+    file.close()
+    print("Closing file")
+    return comments[randint(0, len(comments) - 1)]
+
+
+def pullPictures(directory):
+    pictures = listdir(directory)
+    a = pictures[randint(0, len(pictures) - 1)]
+    print(a)
+    return a
+
+
+def wholesomeReplies():
+    print("Opening directories")
+    return pullPictures("Wholesome")
