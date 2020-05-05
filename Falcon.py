@@ -2,9 +2,11 @@
 import discord
 import ReactionFunctions
 
-
-TOKEN = 'Njg3MzEwMjUwMjY0NDk0MTA1.Xmj7aw.rT9i1xA1O2raTdledApzfAOYtsU'
-GUILD = '686271323869151314'
+file=open("guildInfo.txt","r")
+info=file.readlines()
+file.close()
+TOKEN = info[0]
+GUILD = info[1]
 client = discord.Client()
 
 RF = ReactionFunctions

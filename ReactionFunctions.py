@@ -13,8 +13,6 @@ def calculateWinLoss(x, y):
 
 
 def winOrLoss(me, split_command):
-    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
-    document = workFile.active
     # find discord ID in spreadsheet
     # go to win column, get the data and add plus one
     # go to the other person mentioned and go to their loss sheet and add one to their loss sheet
@@ -102,8 +100,6 @@ def rankList(args):
 
 
 def displayRecord(args):
-    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
-    document = workFile.active
     # Will display the record of the calling person
     # Will go in by his ID and print out his
     # win loss record as well as his W/L ratio
@@ -141,8 +137,6 @@ def displayRecord(args):
 
 
 def joinLeague(args):
-    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
-    document = workFile.active
     row_where_to_add = document.max_row + 1
     max_height = document.max_row
     for i in range(2, max_height + 1):
@@ -159,8 +153,6 @@ def joinLeague(args):
 
 
 def listLeagueMembers():
-    workFile = openpyxl.load_workbook("Stats.xlsx", data_only=True)
-    document = workFile.active
     list = ""
     for i in range(2, document.max_row + 1):
         if (str(document.cell(row=i, column=1).value) != "None"):
