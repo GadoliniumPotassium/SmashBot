@@ -166,7 +166,7 @@ def returnFunnyLink():
     return links[randint(0, len(links) - 1)]
 
 def listCommands():
-    return "Here are the following commands:\n!falcon followed by\n1- win\loss vs @opponent\n2-join\n3-rank\n4-record\n5-other secret commands have fun finding them"
+    return "Here are the following commands:\n!falcon followed by\n1-win\loss vs @opponent\n2-join\n3-rank\n4-record\n5-members\n6-other secret commands have fun finding them"
 
 def handHolding():
     print ("Opening file")
