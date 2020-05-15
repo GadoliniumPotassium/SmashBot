@@ -46,26 +46,22 @@ def winOrLoss(me, split_command):
         # This is where the updating happened
         if (split_command[1].lower() == "win"):
             print("updating in win")
-            document.cell(row=rowMe, column=colMe + 2).value = str(
-                int(document.cell(row=rowMe, column=colMe + 2).value) + 1)
-            document.cell(row=rowHim, column=colHim + 3).value = str(
-                int(document.cell(row=rowHim, column=colMe + 3)) + 1)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=3).value,
-                                                                        document.cell(row=rowMe, column=4).value)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=3).value,
-                                                                        document.cell(row=rowHim, column=4).value)
+            document.cell(row=rowMe, column=3).value = str(
+                int(document.cell(row=rowMe, column=3).value) + 1)
+            document.cell(row=rowMe,column=5).value = format(int(document.cell(row=rowMe, column=3).value)/int(document.cell(row=rowMe, column=4).value),'.3f')
+            document.cell(row=rowHim, column=4).value = str(
+                int(document.cell(row=rowHim, column=4).value) + 1)
+            document.cell(row=rowHim,column=5).value = format(int(document.cell(row=rowHim, column=3).value)/int(document.cell(row=rowHim, column=4).value),'.3f')
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         elif split_command[1].lower() == "loss":
             print("updating in loss")
             document.cell(row=rowMe, column=colMe + 3).value = str(
                 int(document.cell(row=rowMe, column=colMe + 3).value) + 1)
+            document.cell(row=rowMe,column=5).value = int(document.cell(row=rowMe, column=3).value)/int(document.cell(row=rowMe, column=4).value)
             document.cell(row=rowHim, column=colHim + 2).value = str(
                 int(document.cell(row=rowHim, column=colMe + 2).value) + 1)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowMe, column=3).value,
-                                                                        document.cell(row=rowMe, column=4).value)
-            document.cell(row=rowMe, column=5).value = calculateWinLoss(document.cell(row=rowHim, column=3).value,
-                                                                        document.cell(row=rowHim, column=4).value)
+            document.cell(row=rowHim,column=5).value = int(document.cell(row=rowHim, column=3).value)/int(document.cell(row=rowHim, column=4).value)
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         else:
