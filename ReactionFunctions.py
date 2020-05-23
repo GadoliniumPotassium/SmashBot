@@ -48,10 +48,11 @@ def winOrLoss(me, split_command):
             print("updating in win")
             document.cell(row=rowMe, column=3).value = str(
                 int(document.cell(row=rowMe, column=3).value) + 1)
-            document.cell(row=rowMe,column=5).value = format(int(document.cell(row=rowMe, column=3).value)/int(document.cell(row=rowMe, column=4).value),'.3f')
+            document.cell(row=rowMe,column=5).value = int(document.cell(row=rowMe, column=3).value)/int(document.cell(row=rowMe, column=4).value)
             document.cell(row=rowHim, column=4).value = str(
                 int(document.cell(row=rowHim, column=4).value) + 1)
-            document.cell(row=rowHim,column=5).value = format(int(document.cell(row=rowHim, column=3).value)/int(document.cell(row=rowHim, column=4).value),'.3f')
+            document.cell(row=rowHim,column=5).value = int(document.cell(row=rowHim, column=3).value)/int(document.cell(row=rowHim, column=4).value)
+            print("The data has been updated")
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         elif split_command[1].lower() == "loss":
@@ -62,6 +63,7 @@ def winOrLoss(me, split_command):
             document.cell(row=rowHim, column=colHim + 2).value = str(
                 int(document.cell(row=rowHim, column=colMe + 2).value) + 1)
             document.cell(row=rowHim,column=5).value = int(document.cell(row=rowHim, column=3).value)/int(document.cell(row=rowHim, column=4).value)
+            print("The data has been updated")
             workFile.save("Stats.xlsx")
             return "Data has been updated, please do !falcon record to see your new record"
         else:
@@ -80,13 +82,14 @@ def rankList(args):
         if (document.cell(row=i, column=1).value != "None"):
             stat_list[document.cell(row=i, column=1).value] = str(document.cell(row=i, column=5).value)
     # We will sort the stat list here
+    stat_list.pop("None",None)
     a = sorted(stat_list, key=stat_list.get)
     a.reverse()
     print(a)
     pos = 1
     final_str = "Rankings:\n"
     for i in a:
-        final_str += str(pos) + " -> " + i + " : " + stat_list[i] + "\n"
+        final_str += str(pos) + " -> " + str(i) + " : " + stat_list[i] + "\n"
         # When we find your position, we will append that message to the beginning of the list and say something
         # of the like, we found you at position number x.
         if (i == args[0]):

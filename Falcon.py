@@ -38,7 +38,7 @@ async def on_message(message):
         tokens = list(filter(None, tokens))
         if tokens == []:
             tokens = [1]
-        if tokens[0] == "!falcon":
+        if tokens[0] == "!falcon" or tokens[0] == ":Falcon:":
             if len(tokens) == 1:
                 await channel.send(RF.listCommands())
                 return
@@ -100,7 +100,8 @@ async def on_message(message):
                 
             elif tokens[1]=="lewd":
                 await channel.send(RF.handHolding())
-                
+               
+               
             else:
                 await channel.send(
                     "This is not a valid command, try again or type :'!falcon help' for more information")
